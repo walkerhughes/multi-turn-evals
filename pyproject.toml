@@ -1,10 +1,15 @@
 [project]
-name = "claude-code-uv-template"
+name = "multi-turn-evals"
 version = "0.1.0"
-description = "Add your description here"
+description = "Multi-turn customer onboarding agent eval suite"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "langgraph>=0.2",
+    "langchain-openai>=0.2",
+    "langchain-core>=0.3",
+    "pydantic>=2.0",
+]
 
 [dependency-groups]
 dev = [
