@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "langchain-core>=0.3",
+    "langchain-openai>=0.3",
     "langgraph",
 ]
 
@@ -17,6 +18,7 @@ dev = [
     "pytest-cov>=6.0",
     "pytest-mock>=3.0",
     "pytest-xdist>=3.0",
+    "pytest-asyncio>=0.24",
     "python-dotenv>=1.0",
 ]
 
@@ -27,6 +29,7 @@ markers = [
     "integration: Integration tests (deselect with '-m \"not integration\"')",
 ]
 addopts = "-v"
+asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 120
