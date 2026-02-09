@@ -338,13 +338,15 @@ class TestCollectPreferences:
 class TestConfirm:
     async def test_summarizes_data(self, mock_tools):
         llm = make_fake_llm([AIMessage(content="Here's your summary. Does everything look correct?")])
-        state = make_state({
-            "current_stage": "confirm",
-            "user_name": "Alice",
-            "email": "alice@example.com",
-            "plan": "pro",
-            "preferences": {"theme": "dark"},
-        })
+        state = make_state(
+            {
+                "current_stage": "confirm",
+                "user_name": "Alice",
+                "email": "alice@example.com",
+                "plan": "pro",
+                "preferences": {"theme": "dark"},
+            }
+        )
         config = make_config(llm, mock_tools)
 
         result = await confirm(state, config)
@@ -366,25 +368,29 @@ class TestComplete:
     async def test_calls_create_account(self, mock_tools):
         response = AIMessage(
             content="",
-            tool_calls=[{
-                "name": "create_account",
-                "args": {
-                    "name": "Alice",
-                    "email": "alice@example.com",
-                    "plan": "pro",
-                    "preferences": {"theme": "dark"},
-                },
-                "id": "tc1",
-            }],
+            tool_calls=[
+                {
+                    "name": "create_account",
+                    "args": {
+                        "name": "Alice",
+                        "email": "alice@example.com",
+                        "plan": "pro",
+                        "preferences": {"theme": "dark"},
+                    },
+                    "id": "tc1",
+                }
+            ],
         )
         llm = make_fake_llm([response])
-        state = make_state({
-            "current_stage": "complete",
-            "user_name": "Alice",
-            "email": "alice@example.com",
-            "plan": "pro",
-            "preferences": {"theme": "dark"},
-        })
+        state = make_state(
+            {
+                "current_stage": "complete",
+                "user_name": "Alice",
+                "email": "alice@example.com",
+                "plan": "pro",
+                "preferences": {"theme": "dark"},
+            }
+        )
         config = make_config(llm, mock_tools)
 
         result = await complete(state, config)
@@ -396,11 +402,13 @@ class TestComplete:
     async def test_sets_account_created(self, mock_tools):
         response = AIMessage(
             content="",
-            tool_calls=[{
-                "name": "create_account",
-                "args": {"name": "Bob", "email": "bob@test.com", "plan": "free", "preferences": {}},
-                "id": "tc1",
-            }],
+            tool_calls=[
+                {
+                    "name": "create_account",
+                    "args": {"name": "Bob", "email": "bob@test.com", "plan": "free", "preferences": {}},
+                    "id": "tc1",
+                }
+            ],
         )
         llm = make_fake_llm([response])
         state = make_state({"current_stage": "complete"})

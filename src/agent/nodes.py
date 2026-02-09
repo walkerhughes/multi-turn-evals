@@ -238,7 +238,7 @@ async def collect_preferences(state: OnboardingState, config: RunnableConfig) ->
         state,
         "Collect the user's preferences (e.g., notifications, theme, language). "
         "When you have gathered all preferences, respond with the first line as "
-        "'PREFERENCES: {\"key\": \"value\", ...}' as valid JSON. "
+        '\'PREFERENCES: {"key": "value", ...}\' as valid JSON. '
         "If the user hasn't provided enough preferences yet, continue asking.",
     )
     response = await llm.ainvoke(messages)
