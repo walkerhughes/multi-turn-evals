@@ -5,6 +5,7 @@ import re
 from typing import Any
 
 from langchain_core.messages import AIMessage, SystemMessage, ToolMessage
+from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import StructuredTool
 
 from agent.state import OnboardingState
@@ -101,7 +102,7 @@ def _parse_preferences_from_response(content: str) -> dict | None:
 # ---------------------------------------------------------------------------
 
 
-async def greeting(state: OnboardingState, config: dict) -> dict:
+async def greeting(state: OnboardingState, config: RunnableConfig) -> dict:
     """Greet the user and transition to collect_name."""
     llm = _get_llm(config)
     messages = _build_messages(
@@ -115,7 +116,7 @@ async def greeting(state: OnboardingState, config: dict) -> dict:
     }
 
 
-async def collect_name(state: OnboardingState, config: dict) -> dict:
+async def collect_name(state: OnboardingState, config: RunnableConfig) -> dict:
     """Collect the user's name from conversation."""
     llm = _get_llm(config)
     messages = _build_messages(
@@ -134,7 +135,7 @@ async def collect_name(state: OnboardingState, config: dict) -> dict:
     return result
 
 
-async def collect_email(state: OnboardingState, config: dict) -> dict:
+async def collect_email(state: OnboardingState, config: RunnableConfig) -> dict:
     """Collect and validate the user's email address."""
     llm = _get_llm(config)
     tools = _get_tools(config)
@@ -171,7 +172,7 @@ async def collect_email(state: OnboardingState, config: dict) -> dict:
     return result
 
 
-async def verify_email(state: OnboardingState, config: dict) -> dict:
+async def verify_email(state: OnboardingState, config: RunnableConfig) -> dict:
     """Send and verify an email verification code."""
     llm = _get_llm(config)
     tools = _get_tools(config)
@@ -202,7 +203,7 @@ async def verify_email(state: OnboardingState, config: dict) -> dict:
     return result
 
 
-async def select_plan(state: OnboardingState, config: dict) -> dict:
+async def select_plan(state: OnboardingState, config: RunnableConfig) -> dict:
     """Help the user select a plan."""
     llm = _get_llm(config)
     tools = _get_tools(config)
@@ -230,7 +231,7 @@ async def select_plan(state: OnboardingState, config: dict) -> dict:
     return result
 
 
-async def collect_preferences(state: OnboardingState, config: dict) -> dict:
+async def collect_preferences(state: OnboardingState, config: RunnableConfig) -> dict:
     """Collect user preferences."""
     llm = _get_llm(config)
     messages = _build_messages(
@@ -251,7 +252,7 @@ async def collect_preferences(state: OnboardingState, config: dict) -> dict:
     return result
 
 
-async def confirm(state: OnboardingState, config: dict) -> dict:
+async def confirm(state: OnboardingState, config: RunnableConfig) -> dict:
     """Summarize collected data and ask for confirmation. Does NOT set current_stage."""
     llm = _get_llm(config)
     summary = (
@@ -269,7 +270,7 @@ async def confirm(state: OnboardingState, config: dict) -> dict:
     return {"messages": [response]}
 
 
-async def complete(state: OnboardingState, config: dict) -> dict:
+async def complete(state: OnboardingState, config: RunnableConfig) -> dict:
     """Create the account using collected data."""
     llm = _get_llm(config)
     tools = _get_tools(config)
