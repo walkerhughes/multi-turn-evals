@@ -1,77 +1,52 @@
-# claude-code-uv-template
+# Multi-turn Agent Evals
 
-A Python project template for developing with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [uv](https://docs.astral.sh/uv/).
+A multi-turn customer onboarding agent built with **LangGraph**, evaluated using the **Harbor framework** on **Modal**. The agent walks users through account creation via a structured conversational flow, and the eval suite validates behavior at both single-step and full-trajectory levels.
 
-## What's Included
+## What It Does
 
-- **uv** for fast Python environment and dependency management
-- **pytest** with `unit` and `integration` markers pre-configured
-- **ruff** for linting and formatting
-- **mypy** for type checking
-- **pytest-cov** for coverage reporting (80% threshold)
-- **pytest-mock** and **pytest-xdist** for mocking and parallel test runs
-- **python-dotenv** for environment variable management
-- **GitHub Actions CI** workflow out of the box
-- **Makefile** with common dev commands
-- **Claude Code hooks** that auto-lint `.py` files after edits
-- **CLAUDE.md** with development guidelines for Claude Code agents
-- **src layout** for clean package structure
+The onboarding agent guides users through: greeting, name collection, email collection & verification, plan selection, preference gathering, confirmation, and account creation. Each stage is a LangGraph node with conditional routing between them.
 
-## Getting Started
+The eval suite tests the agent in two modes:
 
-```bash
-# Install dependencies
-uv sync
-
-# Run tests
-make test
-
-# Lint and format
-make lint
-make lint-fix
-make format
-```
+- **Step-level evals** — inject conversation history and accumulated state, then assert the agent produces the correct next response, stage transition, and tool calls
+- **Trajectory-level evals** — drive a full multi-turn conversation and grade on correctness, efficiency, repetition, tone, and edge-case handling
 
 ## Project Structure
 
 ```
-├── src/                          # Application source code
-│   └── claude_code_uv_template/  # Main package (rename to your project)
-├── tests/
-│   ├── conftest.py               # Shared test fixtures
-│   ├── unit/                     # Unit tests (@pytest.mark.unit)
-│   └── integration/              # Integration tests (@pytest.mark.integration)
-├── .claude/
-│   └── settings.json             # Claude Code hooks config
-├── .github/
-│   └── workflows/ci.yml          # GitHub Actions CI
-├── .githooks/
-│   └── pre-commit                # Pre-commit hook (runs make check)
-├── .env.example                  # Environment variable template
-├── CLAUDE.md                     # Development guidelines for Claude Code
-├── Makefile                      # Dev commands (lint, format, test)
-└── pyproject.toml                # Project config and tool settings
+src/
+├── agent/              # LangGraph agent
+│   ├── graph.py        # StateGraph assembly (nodes, edges, routing)
+│   ├── nodes.py        # Node implementations (greeting, collect_name, etc.)
+│   ├── state.py        # OnboardingState schema
+│   └── tools.py        # Tools (validate_email, send_verification_code, etc.)
+├── grading/            # Eval grading logic
+│   ├── step_grader.py  # Deterministic step-level grader
+│   └── trajectory_grader.py  # Hybrid trajectory grader (deterministic + LLM-as-judge)
+├── harbor_agent/       # Harbor BaseAgent wrapper
+│   └── onboarding_agent.py
+└── scripts/            # Scenario generation & results analysis
+    ├── generate_scenarios.py
+    └── analyze_results.py
 ```
 
-## Testing
-
-Tests use pytest with two markers:
+## Getting Started
 
 ```bash
-make test              # Run all tests
-make test-unit         # Run only @pytest.mark.unit tests
-make test-integration  # Run only @pytest.mark.integration tests
-make coverage          # Run tests with coverage report
-make check             # Run lint + typecheck + unit tests (also runs as pre-commit hook)
+uv sync          # Install dependencies
+make test        # Run all tests
+make check       # Lint + typecheck + unit tests
 ```
 
-## CI
+## Running Evals
 
-GitHub Actions runs `make check` and `make coverage` on every push to `main` and on PRs. See `.github/workflows/ci.yml`.
+```bash
+# Step-level evals (local)
+harbor run -c configs/step-eval-job.yaml -n 4
 
-## Customizing
+# Trajectory evals (local)
+harbor run -c configs/trajectory-eval-job.yaml -n 4
 
-1. Rename the package directory under `src/` to match your project name
-2. Update `name` and `description` in `pyproject.toml`
-3. Update `tool.hatch.build.targets.wheel.packages` in `pyproject.toml`
-4. Update `CLAUDE.md` with project-specific guidelines
+# Full suite on Modal
+harbor run -c configs/full-suite-job.yaml --env modal -n 50
+```
