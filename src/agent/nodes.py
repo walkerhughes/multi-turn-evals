@@ -15,12 +15,12 @@ from agent.state import OnboardingState
 # ---------------------------------------------------------------------------
 
 
-def _get_llm(config: dict) -> Any:
+def _get_llm(config: RunnableConfig) -> Any:
     """Extract the LLM from RunnableConfig."""
     return config["configurable"]["llm"]
 
 
-def _get_tools(config: dict) -> dict[str, StructuredTool]:
+def _get_tools(config: RunnableConfig) -> dict[str, StructuredTool]:
     """Extract tools dict from RunnableConfig."""
     return config["configurable"]["tools"]
 
@@ -157,7 +157,8 @@ async def collect_email(state: OnboardingState, config: RunnableConfig) -> dict:
 
         tc = response.tool_calls[0]
         email = tc["args"].get("email", "")
-        is_valid = json.loads(tool_messages[0].content) if tool_messages[0].content in ("true", "false") else False
+        content = tool_messages[0].content
+        is_valid = json.loads(str(content)) if content in ("true", "false") else False
 
         if is_valid:
             result["email"] = email
@@ -196,7 +197,8 @@ async def verify_email(state: OnboardingState, config: RunnableConfig) -> dict:
 
         for tc, tm in zip(response.tool_calls, tool_messages):
             if tc["name"] == "check_verification_code":
-                is_verified = json.loads(tm.content) if tm.content in ("true", "false") else False
+                tm_content = tm.content
+                is_verified = json.loads(str(tm_content)) if tm_content in ("true", "false") else False
                 if is_verified:
                     result["email_verified"] = True
                     result["current_stage"] = "select_plan"
