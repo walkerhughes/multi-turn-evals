@@ -1,0 +1,7 @@
+{
+  "expected_stage": "select_plan",
+  "expected_state": {},
+  "required_tools": [],
+  "disallowed_tools": ["create_account"],
+  "disallowed_patterns": ["(sorry|unfortunately|cannot)"]
+}

@@ -1,0 +1,7 @@
+{
+  "expected_stage": "collect_email",
+  "expected_state": {},
+  "required_tools": ["validate_email"],
+  "disallowed_tools": ["create_account", "send_verification_code"],
+  "disallowed_patterns": []
+}

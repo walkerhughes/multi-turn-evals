@@ -1,0 +1,6 @@
+[task]
+timeout_sec = 60
+
+[task.metadata]
+category = "step-level"
+subcategory = "confirmation"

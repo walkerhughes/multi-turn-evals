@@ -1,0 +1,9 @@
+{
+  "expected_stage": "collect_email",
+  "expected_state": {
+    "user_name": "Walker Thompson"
+  },
+  "required_tools": [],
+  "disallowed_tools": ["validate_email", "send_verification_code", "create_account"],
+  "disallowed_patterns": []
+}

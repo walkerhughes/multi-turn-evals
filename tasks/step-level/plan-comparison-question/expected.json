@@ -1,0 +1,7 @@
+{
+  "expected_stage": "select_plan",
+  "expected_state": {},
+  "required_tools": ["get_plan_details"],
+  "disallowed_tools": ["create_account", "validate_email"],
+  "disallowed_patterns": []
+}
