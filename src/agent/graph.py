@@ -10,7 +10,8 @@ from agent.tools import get_real_tools
 
 def route_after_confirm(state: OnboardingState) -> str:
     """Route after the confirm node based on user response."""
-    last_msg = state["messages"][-1].content.lower()
+    last_content = state["messages"][-1].content
+    last_msg = str(last_content).lower()
     if "change" in last_msg or "go back" in last_msg:
         return "select_plan"
     if "yes" in last_msg or "confirm" in last_msg:
