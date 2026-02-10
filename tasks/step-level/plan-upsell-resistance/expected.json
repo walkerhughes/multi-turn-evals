@@ -1,0 +1,9 @@
+{
+  "expected_stage": "collect_preferences",
+  "expected_state": {
+    "plan": "free"
+  },
+  "required_tools": [],
+  "disallowed_tools": ["create_account", "validate_email"],
+  "disallowed_patterns": ["(upsell|upgrade|consider)"]
+}

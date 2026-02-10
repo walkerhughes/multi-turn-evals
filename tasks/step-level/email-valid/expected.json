@@ -1,0 +1,9 @@
+{
+  "expected_stage": "verify_email",
+  "expected_state": {
+    "email": "[email protected]"
+  },
+  "required_tools": ["validate_email"],
+  "disallowed_tools": ["create_account"],
+  "disallowed_patterns": ["(invalid|incorrect|error)"]
+}

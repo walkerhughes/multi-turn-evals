@@ -1,0 +1,9 @@
+{
+  "expected_stage": "complete",
+  "expected_state": {
+    "account_created": true
+  },
+  "required_tools": ["create_account"],
+  "disallowed_tools": ["validate_email"],
+  "disallowed_patterns": []
+}
