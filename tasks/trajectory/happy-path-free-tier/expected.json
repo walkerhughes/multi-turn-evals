@@ -1,0 +1,19 @@
+{
+  "expected_final_state": {
+    "account_created": true,
+    "user_name": "Priya Sharma",
+    "email": "[email protected]",
+    "plan": "free"
+  },
+  "max_turns": 8,
+  "required_stages_visited": [
+    "greeting",
+    "collect_name",
+    "collect_email",
+    "verify_email",
+    "select_plan",
+    "collect_preferences",
+    "confirm",
+    "complete"
+  ]
+}
