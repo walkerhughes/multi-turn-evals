@@ -48,10 +48,11 @@ def build_history_for_stage(
     history = []
 
     # Always start with greeting
-    history.append({
-        "role": "assistant",
-        "content": "Welcome! I'm here to help you set up your new account. To get started, could you please tell me your name?",
-    })
+    welcome = (
+        "Welcome! I'm here to help you set up your new account. "
+        "To get started, could you please tell me your name?"
+    )
+    history.append({"role": "assistant", "content": welcome})
 
     if stage == "collect_name":
         # User just arrived, history is just the greeting
@@ -127,10 +128,11 @@ def build_history_for_stage(
         "role": "user",
         "content": "Dark mode and weekly email digests please",
     })
-    history.append({
-        "role": "assistant",
-        "content": 'PREFERENCES: {"theme": "dark", "notifications": "weekly"}\nLet me summarize everything for your confirmation.',
-    })
+    prefs_msg = (
+        'PREFERENCES: {"theme": "dark", "notifications": "weekly"}\n'
+        "Let me summarize everything for your confirmation."
+    )
+    history.append({"role": "assistant", "content": prefs_msg})
 
     if stage == "confirm":
         history.append({"role": "user", "content": "Yes, that all looks correct!"})
