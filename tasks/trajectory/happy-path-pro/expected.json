@@ -1,0 +1,19 @@
+{
+  "expected_final_state": {
+    "account_created": true,
+    "user_name": "Marcus Chen",
+    "email": "[email protected]",
+    "plan": "pro"
+  },
+  "max_turns": 9,
+  "required_stages_visited": [
+    "greeting",
+    "collect_name",
+    "collect_email",
+    "verify_email",
+    "select_plan",
+    "collect_preferences",
+    "confirm",
+    "complete"
+  ]
+}

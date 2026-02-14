@@ -1,0 +1,6 @@
+[task]
+timeout_sec = 120
+
+[task.metadata]
+category = "trajectory"
+subcategory = "happy-path"

@@ -1,0 +1,19 @@
+{
+  "expected_final_state": {
+    "account_created": true,
+    "user_name": "Sofia Rodriguez",
+    "email": "[email protected]",
+    "plan": "enterprise"
+  },
+  "max_turns": 9,
+  "required_stages_visited": [
+    "greeting",
+    "collect_name",
+    "collect_email",
+    "verify_email",
+    "select_plan",
+    "collect_preferences",
+    "confirm",
+    "complete"
+  ]
+}
