@@ -87,7 +87,7 @@ class OnboardingEvalAgent(BaseAgent):
 
     async def _run_trajectory_eval(self, graph: Any, scenario: dict) -> dict:
         """Drive full conversation, collect all turns."""
-        state = {
+        state: dict[str, Any] = {
             "messages": [],
             "current_stage": "greeting",
             "user_name": None,
@@ -102,7 +102,8 @@ class OnboardingEvalAgent(BaseAgent):
 
         all_turns = []
         for turn in scenario["turns"]:
-            state["messages"].append({"role": "user", "content": turn["user_message"]})
+            messages: list[Any] = state["messages"]
+            messages.append({"role": "user", "content": turn["user_message"]})
             state = await graph.ainvoke(state)
             all_turns.append(
                 {
