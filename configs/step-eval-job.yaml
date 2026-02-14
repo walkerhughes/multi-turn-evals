@@ -1,0 +1,20 @@
+environment:
+  name: modal
+  kwargs:
+    gpu: false
+    timeout: 120
+
+agents:
+  - import_path: "harbor_agent.onboarding_agent.OnboardingEvalAgent"
+    model_name: "openai/gpt-5-nano"
+    kwargs:
+      eval_mode: "step"
+
+datasets:
+  - path: "./tasks/step-level"
+
+metrics:
+  - name: accuracy
+    expression: "mean(rewards)"
+  - name: pass_rate
+    expression: "mean(rewards >= 0.8)"
